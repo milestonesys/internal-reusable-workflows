@@ -15,7 +15,6 @@ defaults:
 env:
   GITHUB_BRANCH: ${{ github.head_ref || github.ref_name }}
   BUILD_CONFIGURATION: Release
-  BUILD_PLATFORM: 'Any CPU'
   BUILD_SOLUTION: ${{ inputs.solution }}
 
 jobs:
@@ -34,8 +33,8 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore ${{ env.BUILD_SOLUTION }}
 
-      - name: Setup Visual Studio
-        uses: microsoft/setup-msbuild@v1
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v2
 
       - name: Build solution
-        run: msbuild ${{ env.BUILD_SOLUTION }} -p:configuration=Release -restore:True
+        run: msbuild ${{ env.BUILD_SOLUTION }} -p:configuration=${{ env.BUILD_CONFIGURATION }}
