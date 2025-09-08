@@ -1,19 +1,12 @@
-name: BuildSamples
+name: Build Visual Studio Solution file
 
 on:
   workflow_call:
     inputs:
       solution:
-        description: 
+        description: 'The name of the solution (.sln) file to build'
         required: true
         type: string
-
-permissions:
-  contents: write
-  actions: read
-  checks: write
-  pull-requests: write
-  security-events: write 
 
 defaults:
   run:
@@ -26,12 +19,9 @@ env:
   BUILD_SOLUTION: ${{ inputs.solution }}
 
 jobs:
-  build-samples:
-    name: Build Samples
+  build-solution:
+    name: Build solution file
     runs-on: windows-latest
-
-    strategy:
-      fail-fast: false
 
     steps:
       - name: Print branch
